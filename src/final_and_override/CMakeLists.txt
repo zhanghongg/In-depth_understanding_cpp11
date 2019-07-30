@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
-project(extend_friend_syntax)
+
+project(final_and_override)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     include(CheckFunctionExists)

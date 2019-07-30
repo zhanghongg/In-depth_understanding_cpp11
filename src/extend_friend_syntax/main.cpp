@@ -31,22 +31,15 @@ private:
 using Defender = DefenderT<int>;
 using Attacker = AttackerT<int>;
 
-int main()
-{
-    cout <<"123" << endl;
-    return 0;
-}
+#define UNIT_TEST
 #ifdef UNIT_TEST
 class Validator {
 public:
-    void Validate (int x, int y, DefenderTest& d) {}
-    void Validate (int x, int y, AttackerTest& a) {}
+    void Validate (int x, int y, DefenderT<Validator>& d) {}
+    void Validate (int x, int y, AttackerT<Validator>& a) {}
 };
 
-using DefenderTest = DefenderT<Validator>;
-using AttackerTest = AttackerT<Validator>;
-
-int main(){
+int main() {
     cout << "Hello World!" << endl;
     return 0;
 }
