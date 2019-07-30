@@ -39,13 +39,13 @@ public:
 
 Moveable getTemp() {
     Moveable tmp = Moveable();
-    cout << hex << "Huge men from " << __func__ << " @" << tmp._h._c << endl;
+//    cout << hex << "Huge men from " << __func__ << " @" << tmp._h._c << endl;
     return tmp;
 }
 
 int main()
 {
-    Moveable a(getTemp());
-    cout << hex << "Huge men from " << __func__ << " @" << a._h._c << endl;
+    Moveable&& a(getTemp());
+//    cout << hex << "Huge men from " << __func__ << " @" << a._h._c << endl;
     return 0;
 }
