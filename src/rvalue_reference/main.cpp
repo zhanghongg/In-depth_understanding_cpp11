@@ -1,4 +1,17 @@
+/*
+ * show rvalue_reference.
+ * note: 1. copy constructor and assigning operator is implicitly deleted when the user declares move constructor
+ *       2. std::move   @brief  Convert a value to an rvalue.
+ *       3. Eliminate unnecessary const keywords
+ *       4. judge whether a type is a reference type.  is_lvalue_reference, is_rvalue_reference, is_reference
+ *       5. judge whether a type is a movable type. is_move_constructible, is_trivially_move_constructible, is_nothrow_move_constructible
+ *       6. Throwing exceptions is dangerous for moving constructors.Use noexcept and try to write a move constructor that does not throw exceptions.
+ *       7. std::move_if_noexcept   @brief  Conditionally convert a value to an rvalue.
+ *       8. perfect forwarding.
+ */
+
 #include <iostream>
+#include <type_traits>
 
 using namespace std;
 
@@ -10,7 +23,7 @@ public:
     ~HugeMem() {
         delete [] _c;
     }
-    HugeMem(HugeMem&& hm) : _sz(hm._sz), _c(hm._c) {
+    HugeMem(HugeMem&& hm) noexcept : _sz(hm._sz), _c(hm._c) {
         hm._c = nullptr;
     }
 
@@ -29,7 +42,7 @@ public:
         delete _i;
         cout << "g_destruct : " << ++g_destruct << endl;
     }
-    Moveable(Moveable&& m) : _i(m._i), _h(move(m._h)) {
+    Moveable(Moveable&& m) noexcept : _i(m._i), _h(move(m._h)) {
         m._i = nullptr;
         cout << "g_moveConstr : " << ++g_moveConstr << endl;
     }
@@ -45,7 +58,14 @@ Moveable getTemp() {
 
 int main()
 {
-    Moveable&& a(getTemp());
-//    cout << hex << "Huge men from " << __func__ << " @" << a._h._c << endl;
+    Moveable a(getTemp());
+    cout << hex << "Huge men from " << __func__ << " @" << a._h._c << endl;
+
+    cout << "is_rvalue_reference sring&& : " << is_rvalue_reference<string&&>::value << endl;
+    cout << "is_move_constructible sring : " << is_move_constructible<string>::value << endl;
     return 0;
 }
+
+
+
+
