@@ -60,3 +60,12 @@ int main() {
 }
 
 // 3. reuse anonymous types
+// ...
+// 4. extend the power of template generics
+template<typename T1, typename T2>
+void sum(T1 a, T2 b, decltype(a+b)& s) {
+    s = a + b;
+}
+void sum(int a[], int b[], int s[]) {
+    // ...
+}
